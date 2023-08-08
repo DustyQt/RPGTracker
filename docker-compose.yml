@@ -1,0 +1,9 @@
+version: '3' 
+services: 
+ web: 
+   build: . 
+   command: python /var/www/app.py 
+   volumes: 
+   - ./application:/var/www/
+   ports: 
+   - "80:80"
