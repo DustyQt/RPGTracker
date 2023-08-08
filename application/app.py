@@ -1,11 +1,15 @@
 from flask import Flask
+from src.controller.manager import manager
 app = Flask(__name__) 
 
 @app.route('/') 
 def hello(): 
-    return 'Hello, o!3' 
+    return 'Sup' 
 
-def sup():
-    return 'sup3'
+@app.route('/db')
+def db():
+    mng = manager()
+    return mng.call_query()
+
 if __name__ == '__main__': 
     app.run(debug=True, host='0.0.0.0', port=80)
