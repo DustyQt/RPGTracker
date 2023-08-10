@@ -1,2 +1,6 @@
 flask
 redis
+requests
+boto3
+seval
+pydash

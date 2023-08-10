@@ -1,9 +1,15 @@
-version: '3' 
-services: 
- web: 
+version: '3'
+services:
+  web: 
    build: . 
+   env_file: .env
    command: python /var/www/app.py 
    volumes: 
-   - ./application:/var/www/
+    - ./application:/var/www/
    ports: 
-   - "80:80"
+    - "80:80"
+   environment:
+    - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    - DYNAMO_DB_URL=${DYNAMO_DB_URL}
+    - AWS_REGION=${AWS_REGION}
