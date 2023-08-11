@@ -18,7 +18,9 @@ class Connector:
     def get_item(self, table_name, key):
         table = self.dynamodb.Table(table_name)
         res = table.get_item(Key= key)
-        return res['Item']
+        if res.get('Item') is None:
+            raise KeyError(key)
+        return res.get('Item')
     
     def scan_w_filter(self, table_name, filter_expression):
         table = self.dynamodb.Table(table_name)
