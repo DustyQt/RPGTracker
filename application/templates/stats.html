@@ -1,0 +1,12 @@
+{% block content %}
+    <div style="width: 10%;">
+        <table id="data">
+            {% for stat in stats %}
+            <tr>
+              <td>{{ stat }}</td>
+              <td>{{ stats[stat] }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+    </div>
+{% endblock %}

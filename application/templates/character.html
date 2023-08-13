@@ -1,0 +1,53 @@
+{% import 'stats.html' as stats_template %}
+{% import 'class.html' as class_template %}
+{% import 'basic_info.html' as basic_info_template %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ char['id'] }}</title>
+</head>
+<body>
+    <div class="content">
+        {% with 
+            level=char['level'],
+            race=char['race']['name'],
+            name=char['name'],
+            element=char['element']
+        %}
+        {% include 'basic_info.html' %}
+        {% endwith %}
+    </div>
+    <div class="content">
+        <h3>basic stats</h3>
+        {% with stats=char['basic_stats'] %}
+        {% include 'stats.html' %}
+        {% endwith %}
+    </div>
+    <div class="content">
+        <h3>secondary stats</h3>
+        {% with stats=char['secondary_stats'] %}
+        {% include 'stats.html' %}
+        {% endwith %}
+    </div>
+    <div class="content">
+        <h3>race stats</h3>
+        {% with stats=char['race_stats'] %}
+        {% include 'stats.html' %}
+        {% endwith %}
+    </div>
+    <div class="content">
+        {% for cls in char['classes'] %}
+            {% with 
+                cls_name=cls['name'],
+                cls_info_skills=cls['info_skills'],
+                cls_effect_skills=cls['precalculated_effect_skills']
+            %}
+            {% include 'class.html' %}
+            {% endwith %}
+        {% endfor %}
+    </div>
+</body>
+
+</html>

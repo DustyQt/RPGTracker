@@ -3,12 +3,19 @@ from src.controller.manager import manager
 app = Flask(__name__) 
 mng = manager()
 
-@app.route('/sup') 
+@app.route('/') 
 def hello(): 
-    return 'Hello Sense' 
+    return 'sup'
 
 @app.route('/character',methods = ['GET'])
-def query(): 
+def character(): 
+    if request.method == 'GET':
+        args = request.args
+        res = mng.load_character(args['id'])
+        return render_template('character.html', char=res)
+    
+@app.route('/json',methods = ['GET'])
+def character_json(): 
     if request.method == 'GET':
         args = request.args
         res = mng.load_character(args['id'])

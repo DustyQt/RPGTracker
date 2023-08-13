@@ -1,0 +1,20 @@
+{% block content %}
+<table id="data">
+    {% for skill in info_skills %}
+    <tr>
+      <td>{{ skill }}</td>
+      <td>
+        <button class="btn btn-primary" onClick="copyToClipboard('{{skill}}')">c</button>
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+    }
+</script>
+{% endblock %}

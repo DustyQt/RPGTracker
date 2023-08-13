@@ -1,0 +1,14 @@
+{% import 'effect_skills.html' as effect_skills_template %}
+{% import 'info_skills.html' as info_skills_template %}
+{% block content %}
+    <div style="width: 100%; margin: auto;">
+        <h3> {{cls_name}} info skills</h3>
+          {% with info_skills=cls_info_skills %}
+          {% include 'info_skills.html' %}
+          {% endwith %}
+        <h3> {{cls_name}} effect skills</h3>
+          {% with effect_skills=cls_effect_skills %}
+          {% include 'effect_skills.html' %}
+          {% endwith %}
+    </div>
+{% endblock %}

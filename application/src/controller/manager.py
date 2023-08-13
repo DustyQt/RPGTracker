@@ -14,8 +14,10 @@ class manager:
         character['class_stats'] = self.get_class_stats(character)
         character['all_pasives_plain'], character['all_pasives_percentage'] = self.get_class_pasives(character)
         character['secondary_stats'] = self.calculate_stats(self.get_secondary_stats(), character)
+        character['race'] = self.get_race(character)
         character['race_stats'] = self.calculate_stats(self.get_race_stats(character), character)
-        print(character)
+        for index, value in enumerate(character['classes']):
+            character['classes'][index]['precalculated_effect_skills'] = self.pre_calculate_skills(character, value)
         return character
 
     def get_classes(self, character): 
@@ -23,7 +25,7 @@ class manager:
         for char_class in character['classes']:
             character_classes.append(self.connector.get_item(table_name='class', key={'id': char_class}))
         return character_classes
-    
+     
     def get_class_stats(self, character):
         character_classes = character['classes']
         class_stats = dict()
@@ -76,11 +78,15 @@ class manager:
     
     def get_race_stats(self, character): 
         race_stats = list()
-        race = self.connector.get_item(table_name='race', key={'id': character['race']})
+        race = character['race']
         for stat in race['stats']:
             race_stats.append(self.connector.get_item(table_name='stat', key={'id': stat}))
         return race_stats
     
+    def get_race(self, character): 
+        res = self.connector.get_item(table_name='race', key={'id': character['race']})
+        return res
+
     def calculate_stats(self, all_stats_list, character): 
         all_stats_dict = dict()
         for i in range(len(all_stats_list)):
@@ -103,3 +109,29 @@ class manager:
             formula = formula.replace(route, str(dv[route]))
         result = seval.safe_eval(formula)
         return result
+    
+    def precalculate(self, character, formula, dv):
+        for route in dv: 
+            value = pydash.get(character, route)
+            print(f'{route}: {value}')
+            if value is not None:
+                if type(value) == list:
+                    dv[route] = sum(value)
+                else:
+                    dv[route] = value
+            formula = formula.replace(route, str(dv[route]))
+        return formula
+     
+    def pre_calculate_skills(self, character, e): 
+        element_skills_dict = list() 
+        for skill in e['effect_skills']:
+            precalc_skill = skill.copy()
+            precalc_skill['effects']= list()
+            for effect in skill['effects']:
+                effect_precalculated ={'formula':  self.precalculate(character, effect['formula'], effect['default_values']),
+                                    'stat': effect['stat'],
+                                    'effect': effect['effect']}
+                precalc_skill['effects'].append(effect_precalculated)
+            element_skills_dict.append(precalc_skill)
+        return element_skills_dict
+
