@@ -1,0 +1,35 @@
+{% block content %}
+<table id="data">
+    {% for fit in effect_fits %}
+    {% set description= fit['description'] %}
+    <tr>
+        <td>{{ description }}</td>
+        <td>
+            <button class="btn btn-primary" onClick="copyToClipboard('{{description}}')">c</button>
+        </td>
+        <table>
+            {% set effects = fit['effects'] %}
+            {% for effect in effects %}
+            {% set formula= effect['formula'] %}
+            <tr>
+                <td>[{{effect['effect']}}]</td>
+                <td>[{{effect['stat']}}]</td>
+                <td>formula: {{formula}}</td>
+                <td>
+                    <button class="btn btn-primary" onClick="copyToClipboard('{{formula}}')">c</button>
+                </td>
+            </tr>
+          {% endfor %}
+        </table>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+    }
+</script>
+{% endblock %}

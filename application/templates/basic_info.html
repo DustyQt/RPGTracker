@@ -2,7 +2,10 @@
     <div style="width: 10%;">
         <h3>{{name}}</h3>
         <p>level: {{level}}</p>
-        <p>race: {{race}}</p>        
-        <p>element: {{element}}</p>
+        <p>race: {{race}}</p>
+        <p>elements:</p>
+        {% for element in elements %}     
+            <p>{{element}}</p>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -1,12 +1,14 @@
 {% import 'stats.html' as stats_template %}
 {% import 'class.html' as class_template %}
+{% import 'race.html' as race_template %}
+{% import 'fits.html' as fits_template %}
 {% import 'basic_info.html' as basic_info_template %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ char['id'] }}</title>
+    <title>{{ char['name'] }}</title>
 </head>
 <body>
     <div class="content">
@@ -14,7 +16,7 @@
             level=char['level'],
             race=char['race']['name'],
             name=char['name'],
-            element=char['element']
+            elements=char['elements']
         %}
         {% include 'basic_info.html' %}
         {% endwith %}
@@ -38,6 +40,14 @@
         {% endwith %}
     </div>
     <div class="content">
+        {% with 
+            race_name=char['race']['name'],
+            race_info_skills=char['race']['info_skills']
+        %}
+        {% include 'race.html' %}
+        {% endwith %}
+    </div>
+    <div class="content">
         {% for cls in char['classes'] %}
             {% with 
                 cls_name=cls['name'],
@@ -47,6 +57,11 @@
             {% include 'class.html' %}
             {% endwith %}
         {% endfor %}
+    </div>
+    <div class="content">
+          {% with info_fits=char['info_fits'] %}
+          {% include 'fits.html' %}
+          {% endwith %}
     </div>
 </body>
 

@@ -1,0 +1,10 @@
+{% import 'effect_skills.html' as effect_skills_template %}
+{% import 'info_skills.html' as info_skills_template %}
+{% block content %}
+    <div style="width: 100%; margin: auto;">
+        <h3> {{race_name}} info skills</h3>
+          {% with info_skills=race_info_skills %}
+          {% include 'info_skills.html' %}
+          {% endwith %}
+    </div>
+{% endblock %}

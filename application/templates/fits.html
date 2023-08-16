@@ -1,0 +1,12 @@
+{% import 'effect_fits.html' as effect_fits_template %}
+{% import 'info_fits.html' as info_fits_template %}
+{% block content %}
+    <div style="width: 100%; margin: auto;">
+        <h3> info fits</h3>
+          {% include 'info_fits.html' %}
+    </div>
+    <div style="width: 100%; margin: auto;">
+        <h3> effect fits</h3>
+          {% include 'effect_fits.html' %}
+    </div>
+{% endblock %}

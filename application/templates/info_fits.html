@@ -1,0 +1,22 @@
+{% block content %}
+<table id="data">
+    {% for fit in info_fits %}
+    {% set description=fit['description'] %}
+    <tr>
+      <td>[{{ fit['stat'] }}]</td>
+      <td>{{ description }}</td>
+      <td>
+        <button class="btn btn-primary" onClick="copyToClipboard('{{description}}')">c</button>
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+    }
+</script>
+{% endblock %}
